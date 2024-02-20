@@ -31,8 +31,16 @@ int main(int argc, char *argv[]) {
   fstat(fd, &st);
   char* data = malloc(st.size);
   read(fd, data, st.size);
-  close(fd);
 
+  //need to check the password with a system call 
+  //if the password is wrong, the file will not be decrypted
+  int check = checkPassword(fd, password);
+  if (check < 0){
+    printf(2, "Error: Wrong password\n");
+    exit();
+  }
+  close(fd);
+  //need to create checkPassword system call in order to check the password
   char* decrypted = xor_decrypt(data, password, st.size);
 
   fd = open(filename, O_CREATE | O_WRONLY);

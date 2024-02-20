@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
   char* password = argv[1];
   char* filename = argv[2];
 
-  int fd = open(filename, O_RDONLY);
+  int fd = openencrypt(filename, O_RDONLY, password);
   if (fd < 0) {
     printf(2, "Failed to open file\n");
     exit();
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 
   char* encrypted = xor_encrypt(data, password, st.size);
 
-  fd = open(filename, O_CREATE | O_WRONLY);
+  fd = openencrypt(filename, O_CREATE | O_WRONLY, password);
   if (fd < 0) {
     printf(2, "Failed to open file for writing\n");
     exit();

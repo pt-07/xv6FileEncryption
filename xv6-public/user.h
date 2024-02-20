@@ -24,7 +24,7 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int openencrypt(const char*, int, char*); //new system call to open a file with encryption
-
+int checkPassword(int, char*); //new system call to check the password
 
 // ulib.c
 int stat(const char*, struct stat*);

@@ -19,6 +19,13 @@
 
 // Fetch the nth word-sized system call argument as a file descriptor
 // and return both the descriptor and the corresponding struct file.
+int strcmp(const char *s1, const char *s2) {
+    while(*s1 && (*s1 == *s2)) {
+        s1++;
+        s2++;
+    }
+    return *(const unsigned char*)s1 - *(const unsigned char*)s2;
+}
 char *kstrdup(const char *s) {
     char *new = kalloc();
     if (new == NULL)
@@ -404,6 +411,29 @@ sys_openencrypt(void)
   return fd;
 }
 
+int 
+sys_checkPassword(void)
+{
+  //check the file descriptor 
+  int fd;
+  struct file *f;
+  char *password;
+  if(argfd(0, &fd, &f) < 0)
+    return -1;
+
+  //check that the password matches, return 1 
+  //if it does and 0 if it does not
+
+  if(argstr(1, &password) < 0)
+    return -2;
+  if(f->password == 0)
+    return -3;
+  //compare f->password with the password
+  if(strcmp(f->password, password) == 0)
+    return 1;
+  else
+    return -4;
+}
 int
 sys_mkdir(void)
 {
