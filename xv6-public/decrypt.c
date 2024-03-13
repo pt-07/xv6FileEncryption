@@ -40,7 +40,6 @@ int main(int argc, char *argv[]) {
     exit();
   }
   close(fd);
-  //need to create checkPassword system call in order to check the password
   char* decrypted = xor_decrypt(data, password, st.size);
 
   fd = open(filename, O_CREATE | O_WRONLY);
